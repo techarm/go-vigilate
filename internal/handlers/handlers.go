@@ -2,18 +2,19 @@ package handlers
 
 import (
 	"fmt"
-	"github.com/CloudyKit/jet/v6"
-	"github.com/go-chi/chi"
-	"github.com/tsawler/vigilate/internal/config"
-	"github.com/tsawler/vigilate/internal/driver"
-	"github.com/tsawler/vigilate/internal/helpers"
-	"github.com/tsawler/vigilate/internal/models"
-	"github.com/tsawler/vigilate/internal/repository"
-	"github.com/tsawler/vigilate/internal/repository/dbrepo"
 	"log"
 	"net/http"
 	"runtime/debug"
 	"strconv"
+
+	"github.com/CloudyKit/jet/v6"
+	"github.com/go-chi/chi"
+	"github.com/techarm/go-vigilate/internal/config"
+	"github.com/techarm/go-vigilate/internal/driver"
+	"github.com/techarm/go-vigilate/internal/helpers"
+	"github.com/techarm/go-vigilate/internal/models"
+	"github.com/techarm/go-vigilate/internal/repository"
+	"github.com/techarm/go-vigilate/internal/repository/dbrepo"
 )
 
 //Repo is the repository

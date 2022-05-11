@@ -3,18 +3,19 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/alexedwards/scs/postgresstore"
-	"github.com/alexedwards/scs/v2"
-	"github.com/pusher/pusher-http-go"
-	"github.com/tsawler/vigilate/internal/channeldata"
-	"github.com/tsawler/vigilate/internal/config"
-	"github.com/tsawler/vigilate/internal/driver"
-	"github.com/tsawler/vigilate/internal/handlers"
-	"github.com/tsawler/vigilate/internal/helpers"
 	"log"
 	"net/http"
 	"os"
 	"time"
+
+	"github.com/alexedwards/scs/postgresstore"
+	"github.com/alexedwards/scs/v2"
+	"github.com/pusher/pusher-http-go"
+	"github.com/techarm/go-vigilate/internal/channeldata"
+	"github.com/techarm/go-vigilate/internal/config"
+	"github.com/techarm/go-vigilate/internal/driver"
+	"github.com/techarm/go-vigilate/internal/handlers"
+	"github.com/techarm/go-vigilate/internal/helpers"
 )
 
 func setupApp() (*string, error) {

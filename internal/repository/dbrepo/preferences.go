@@ -2,9 +2,10 @@ package dbrepo
 
 import (
 	"context"
-	"github.com/tsawler/vigilate/internal/models"
 	"log"
 	"time"
+
+	"github.com/techarm/go-vigilate/internal/models"
 )
 
 // AllPreferences returns a slice of preferences

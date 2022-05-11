@@ -1,9 +1,10 @@
 package main
 
 import (
-	"github.com/go-chi/chi"
-	"github.com/tsawler/vigilate/internal/handlers"
 	"net/http"
+
+	"github.com/go-chi/chi"
+	"github.com/techarm/go-vigilate/internal/handlers"
 )
 
 func routes() http.Handler {
@@ -21,6 +22,11 @@ func routes() http.Handler {
 	mux.Post("/", handlers.Repo.Login)
 
 	mux.Get("/user/logout", handlers.Repo.Logout)
+
+	mux.Route("/pusher", func(mux chi.Router) {
+		mux.Use(Auth)
+		mux.Post("/auth", handlers.Repo.PusherAuth)
+	})
 
 	// admin routes
 	mux.Route("/admin", func(mux chi.Router) {
