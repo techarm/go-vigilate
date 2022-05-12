@@ -1,13 +1,24 @@
 #!/bin/zsh
 
-# This is the bare minimum to run in development. For full list of flags,
-# run ./vigilate -help
-
-go build -o vigilate cmd/web/*.go && ./vigilate \
--dbuser='someuser' \
--pusherHost='pusher.com' \
+go_build=`go build -o ./dist/vigilate cmd/web/*.go`
+go_run="./dist/vigilate \
+-dbhost='localhost' \
+-dbuser='postgres' \
+-dbpass='password' \
+-pusherHost='localhost' \
 -pusherKey='abc123' \
 -pusherSecret='123abc' \
--pusherApp="1"
--pusherPort="4001"
--pusherSecure=false
+-pusherApp='1' \
+-pusherPort='4001' \
+-pusherSecure=false"
+
+if [[ $1 == "build" ]]; then
+    eval $go_build
+
+elif [[ $1 == "run" ]]; then
+    eval $go_run
+
+else
+    eval $go_build
+    eval $go_run
+fi
