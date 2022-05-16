@@ -9,6 +9,16 @@ import (
 	"github.com/pusher/pusher-http-go"
 )
 
+func (repo *DBRepo) TestPusher(w http.ResponseWriter, r *http.Request) {
+	data := make(map[string]string)
+	data["message"] = "Hello, world"
+
+	err := repo.App.WsClient.Trigger("public-channel", "test-event", data)
+	if err != nil {
+		log.Println(err)
+	}
+}
+
 func (repo *DBRepo) PusherAuth(w http.ResponseWriter, r *http.Request) {
 	userID := repo.App.Session.GetInt(r.Context(), "userID")
 	u, _ := repo.DB.GetUserById(userID)

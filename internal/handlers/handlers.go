@@ -128,10 +128,69 @@ func (repo *DBRepo) AllHosts(w http.ResponseWriter, r *http.Request) {
 
 // Host shows the host add/edit form
 func (repo *DBRepo) Host(w http.ResponseWriter, r *http.Request) {
-	err := helpers.RenderPage(w, r, "host", nil, nil)
+	id, err := strconv.Atoi(chi.URLParam(r, "id"))
 	if err != nil {
 		printTemplateError(w, err)
 	}
+
+	var h models.Hosts
+	if id > 0 {
+		// get the host from the database
+		// repo.App.DB
+	}
+
+	// h.HostName
+
+	vars := make(jet.VarMap)
+	vars.Set("host", h)
+
+	err = helpers.RenderPage(w, r, "host", vars, nil)
+	if err != nil {
+		printTemplateError(w, err)
+	}
+}
+
+// Host handles posting of host form
+func (repo *DBRepo) PostHost(w http.ResponseWriter, r *http.Request) {
+	// err := helpers.RenderPage(w, r, "host", nil, nil)
+	// if err != nil {
+	// 	printTemplateError(w, err)
+	// }
+
+	id, err := strconv.Atoi(chi.URLParam(r, "id"))
+	if err != nil {
+		helpers.ServerError(w, r, err)
+		return
+	}
+
+	var h models.Hosts
+	if id > 0 {
+		// get the host from the database
+	} else {
+		h.HostName = r.Form.Get("host_name")
+		h.CanonicalHost = r.Form.Get("canonical_name")
+		h.URL = r.Form.Get("url")
+		h.IP = r.Form.Get("ip")
+		h.IPv6 = r.Form.Get("ipv6")
+		h.Location = r.Form.Get("location")
+		h.OS = r.Form.Get("os")
+		h.Active, err = strconv.Atoi(r.Form.Get("active"))
+		if err != nil {
+			helpers.ServerError(w, r, err)
+			return
+		}
+
+		newID, err := repo.DB.InsertHost(h)
+		if err != nil {
+			helpers.ServerError(w, r, err)
+			return
+		}
+
+		h.ID = newID
+	}
+
+	repo.App.Session.Put(r.Context(), "flash", "Chages saved")
+	http.Redirect(w, r, fmt.Sprintf("/admin/host/%d", h.ID), http.StatusSeeOther)
 }
 
 // AllUsers lists all admin users
